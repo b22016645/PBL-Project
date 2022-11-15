@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PBL-Project</string>
+    <string name="action_sign_out">signout</string>
 </resources>
