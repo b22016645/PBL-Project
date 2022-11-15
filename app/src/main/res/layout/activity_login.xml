@@ -8,6 +8,17 @@
     tools:context=".LoginActivity">
 
     <Button
+        android:id="@+id/findIDPW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="120dp"
+        android:background="@android:color/black"
+        android:text="아이디/비번찾기"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+    <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
@@ -17,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+        app:layout_constraintVertical_bias="0.591" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -27,7 +38,7 @@
         android:layout_marginEnd="10dp"
         android:background="@color/white"
         android:ems="10"
-        android:hint="UserID"
+        android:hint="ID"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/login"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -75,5 +86,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:background="@android:color/black"
+        android:text="회원가입"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
