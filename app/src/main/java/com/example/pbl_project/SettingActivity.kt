@@ -1,4 +1,6 @@
 package com.example.pbl_project
 
-class SettingActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class SettingActivity : AppCompatActivity() {
 }
