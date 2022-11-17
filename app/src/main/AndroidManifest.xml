@@ -22,6 +22,7 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".PostingActivity"/>
         <activity android:name=".SettingActivity"/>
+        <activity android:name=".MyPageActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
