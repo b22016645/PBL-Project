@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.lang.Exception
+import java.lang.Long.getLong
 
 class PostingActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
@@ -52,10 +53,15 @@ class PostingActivity : AppCompatActivity() {
     }
 
     private fun addPost(postMap: HashMap<String,String>) {
+        val idIdx = "id"
+        uploadFile(getLong(idIdx),"image1")
         postsCollectionRef.add(postMap)
             .addOnSuccessListener {
                 //마이페이지로 돌아가기
-            }.addOnFailureListener { }
+                Log.d("로그","postingsuccess")
+            }.addOnFailureListener {
+                Log.d("로그","postingfailed")
+            }
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -64,7 +70,7 @@ class PostingActivity : AppCompatActivity() {
     }
 
     private fun uploadFile(file_id: Long, fileName: String) {
-        val imageRef = storage.reference.child("photoimages/${fileName}") // StorageReference
+        val imageRef = storage.reference.child("photoimages/GhlQreOyU85QsAUi2Fpa/${fileName}") // StorageReference
         val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             file_id)
         imageRef.putFile(contentUri).addOnCompleteListener {

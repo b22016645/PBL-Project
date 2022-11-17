@@ -28,6 +28,11 @@ class MainActivity : AppCompatActivity() {
             Firebase.auth.signOut()
             finish()
         }
+        binding.postbtn.setOnClickListener {
+            startActivity(
+                Intent(this,PostingActivity::class.java))
+            finish()
+        }
 
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener {
 //            binding.textFCMToken.text = if (it.isSuccessful) it.result else "Token Error!"
