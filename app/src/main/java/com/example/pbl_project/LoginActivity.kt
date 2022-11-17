@@ -22,6 +22,9 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.editTextTextPassword.text.toString()
             doLogin(userID,password)
         }
+        binding.signup.setOnClickListener {
+            doSignup()
+        }
     }
     private fun doLogin(userID: String, password: String){
         Firebase.auth.signInWithEmailAndPassword(userID,password)
@@ -35,5 +38,10 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+    private fun doSignup(){
+        startActivity(
+            Intent(this, SignUpActivity::class.java))
+        finish()
     }
 }
