@@ -8,6 +8,7 @@ import android.widget.EditText
 import com.example.pbl_project.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.util.SimpleTimeZone
 
@@ -17,7 +18,11 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val info = userInfo()
+
         if (Firebase.auth.currentUser == null){
+            info.uid=Firebase.auth.currentUser?.uid
+            FirebaseFirestore.getInstance().collection("users")?.document(Firebase.auth.uid.toString())?.set(info)
             startActivity(
                 Intent(this, LoginActivity::class.java))
             finish()
