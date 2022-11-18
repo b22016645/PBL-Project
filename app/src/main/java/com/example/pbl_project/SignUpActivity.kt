@@ -37,18 +37,27 @@ class SignUpActivity : AppCompatActivity() {
             info.email = email
             info.pwd = pw
             info.nickname = name
+            //male = 2131231238 female = 2131231237
             info.sex = sex
 
             if (email.isNotEmpty() && pw.isNotEmpty() && confirmPw.isNotEmpty() && name.isNotEmpty() && sex.isNotEmpty()){
-                if (pw == confirmPw){
-                    firebaseAuth.createUserWithEmailAndPassword(email,pw).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            firebaseStore?.collection("users")?.document(firebaseAuth.uid.toString())?.set(info)
-                            startActivity(Intent(this,LoginActivity::class.java))
-                        }else{
-                            Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
-                            Log.d("로그",it.exception.toString())
+                if(!email.contains("@") && email.length<6){
+                    var toast = Toast.makeText(this,"이메일 형식이 맞지 않습니다.",Toast.LENGTH_SHORT).show()
+                    Log.d("로그",toast.toString())
+                }
+                else if (pw == confirmPw){
+                    if (name.matches("^[a-zA-Z0-9]*$".toRegex())){
+                        firebaseAuth.createUserWithEmailAndPassword(email,pw).addOnCompleteListener {
+                            if(it.isSuccessful){
+                                firebaseStore?.collection("users")?.document(firebaseAuth.uid.toString())?.set(info)
+                                startActivity(Intent(this,LoginActivity::class.java))
+                            }else{
+                                Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                                Log.d("로그",it.exception.toString())
+                            }
                         }
+                    }else{
+                        Toast.makeText(this,"이름은 영문과 숫자만 입력 가능합니다.",Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     Toast.makeText(this,"비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show()
