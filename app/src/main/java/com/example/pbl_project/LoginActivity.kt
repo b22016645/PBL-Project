@@ -25,6 +25,9 @@ class LoginActivity : AppCompatActivity() {
         binding.signup.setOnClickListener {
             doSignup()
         }
+        binding.findPW.setOnClickListener {
+            doFindPw()
+        }
     }
     private fun doLogin(userID: String, password: String){
         Firebase.auth.signInWithEmailAndPassword(userID,password)
@@ -43,5 +46,9 @@ class LoginActivity : AppCompatActivity() {
         startActivity(
             Intent(this, SignUpActivity::class.java))
         finish()
+    }
+    private fun doFindPw(){
+        startActivity(
+            Intent(this, FindPwActivity::class.java))
     }
 }
