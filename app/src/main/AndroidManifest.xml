@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.pbl_project">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--갤러리권한-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -23,6 +22,7 @@
         <activity android:name=".PostingActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".MyPageActivity"/>
+        <activity android:name=".FindPwActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

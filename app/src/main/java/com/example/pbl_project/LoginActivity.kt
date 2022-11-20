@@ -50,5 +50,6 @@ class LoginActivity : AppCompatActivity() {
     private fun doFindPw(){
         startActivity(
             Intent(this, FindPwActivity::class.java))
+        finish()
     }
 }
