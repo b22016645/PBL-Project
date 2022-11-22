@@ -5,6 +5,5 @@ data class userInfo(
     var sex: String?= null,
 //var message: String?= null,
     var nickname:String?= null,
-    var pwd:String?=null,
     var uid:String?= null
 )

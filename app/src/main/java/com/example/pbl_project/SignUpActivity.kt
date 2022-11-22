@@ -35,7 +35,6 @@ class SignUpActivity : AppCompatActivity() {
 
             info.uid = firebaseAuth.uid
             info.email = email
-            info.pwd = pw
             info.nickname = name
             //male = 2131231238 female = 2131231237
             info.sex = sex
