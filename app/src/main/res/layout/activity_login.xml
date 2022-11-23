@@ -8,11 +8,11 @@
     tools:context=".LoginActivity">
 
     <Button
-        android:id="@+id/findPW"
+        android:id="@+id/resetPW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
-        android:text="아이디/비번찾기"
+        android:text="비밀번호 변경"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
@@ -96,16 +96,6 @@
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
-
-    <Button
-        android:id="@+id/LoginWithGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login With GOOGLE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findPW" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
