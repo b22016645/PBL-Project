@@ -10,10 +10,11 @@ import com.google.firebase.ktx.Firebase
 
 class CommentActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommentBinding
+    val postID = "GhlQreOyU85QsAUi2Fpa"
 
     val db: FirebaseFirestore = Firebase.firestore
     val usersCollectionRef = db.collection("users")
-    val IDDocumentRef = usersCollectionRef.document("GhlQreOyU85QsAUi2Fpa")
+    val IDDocumentRef = usersCollectionRef.document(postID)
     val postsCollectionRef = IDDocumentRef.collection("posts")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +22,22 @@ class CommentActivity : AppCompatActivity() {
         binding = ActivityCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getContent("MpoE6QpJRz0DBbjsJOBe")
+        getContent()
         refreshView()
+        refreshLike()
+
+        binding.like.setOnClickListener {
+            var like = ""
+            postsCollectionRef.document(postID).get()
+                .addOnSuccessListener {
+                    like = it["like"].toString()
+                    var likenum = like.toInt()
+                    likenum ++
+                    like = likenum.toString()
+                }
+            postsCollectionRef.document(postID).update("like", like)
+                .addOnSuccessListener { refreshLike() }
+        }
 
         binding.addcommentbtn.setOnClickListener {
             //등록
@@ -41,7 +56,7 @@ class CommentActivity : AppCompatActivity() {
         }
     }
 
-    private fun getContent(postID : String) {
+    private fun getContent() {
         postsCollectionRef.document(postID).get()
             .addOnSuccessListener {
                 binding.content.setText(it["content"].toString())
@@ -65,5 +80,15 @@ class CommentActivity : AppCompatActivity() {
 
     private fun refreshView() {
 
+    }
+
+    private fun refreshLike() {
+        postsCollectionRef.document(postID).get()
+            .addOnSuccessListener {
+                var like = it["like"].toString()
+                var likenum = like.toInt()
+                likenum ++
+                binding.likenum.setText(likenum)
+            }
     }
 }
