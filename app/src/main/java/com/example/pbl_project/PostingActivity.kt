@@ -50,6 +50,10 @@ class PostingActivity : AppCompatActivity() {
         binding.photobtn.setOnClickListener {
             openGallery()
         }
+
+        binding.backbtn.setOnClickListener {
+            //마이페이지로 돌아가기기
+       }
     }
 
     private fun addPost(postMap: HashMap<String,String>) {
