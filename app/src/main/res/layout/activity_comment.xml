@@ -26,9 +26,9 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/white"
         android:background="@drawable/round_border_white"
-        android:text="<"
+        android:text="@string/left"
+        android:textColor="@color/white"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
         app:layout_constraintStart_toStartOf="@+id/commentview" />
 
     <Button
-        android:id="@+id/addcomment"
+        android:id="@+id/addcommentbtn"
         android:layout_width="50dp"
         android:layout_height="40dp"
         android:background="@drawable/round_border_white"
@@ -99,4 +99,25 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/commentview" />
+
+    <Button
+        android:id="@+id/like"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/heart_drawble"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/content"
+        app:layout_constraintStart_toStartOf="@+id/content" />
+
+    <TextView
+        android:id="@+id/likenum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="111"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/commentview"
+        app:layout_constraintEnd_toEndOf="@+id/like"
+        app:layout_constraintStart_toStartOf="@+id/like"
+        app:layout_constraintTop_toBottomOf="@+id/like"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
