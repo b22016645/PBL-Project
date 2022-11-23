@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.pbl_project.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
@@ -23,7 +24,6 @@ class SignUpActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseStore = FirebaseFirestore.getInstance()
-
         binding.postsignup.setOnClickListener {
             var info = userInfo()
 
