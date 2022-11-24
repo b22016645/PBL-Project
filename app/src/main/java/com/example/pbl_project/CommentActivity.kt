@@ -2,8 +2,13 @@ package com.example.pbl_project
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.pbl_project.databinding.ActivityCommentBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,6 +26,14 @@ class CommentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //툴바 설정
+        val toolbar = findViewById<Toolbar>(R.id.commenttoolbar)
+        setSupportActionBar(toolbar)
+        val ac: ActionBar? = supportActionBar
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_foreground)
 
         getContent()
         refreshView()
@@ -50,9 +63,22 @@ class CommentActivity : AppCompatActivity() {
             )
             addComment(commentMap)
         }
+    }
 
-        binding.backbtn.setOnClickListener {
-            //이전으로 돌아가기
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_back, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            R.id.menu_back -> {
+                //뒤로가기버튼 눌렀을때
+                //피드페이지로 돌아가기
+                Snackbar.make(binding.root, "피드페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                return super.onOptionsItemSelected(item)
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 

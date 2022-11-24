@@ -1,13 +1,16 @@
 package com.example.pbl_project
 
 import android.app.Activity
-import android.content.ContentUris
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.pbl_project.databinding.ActivityPostingBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -17,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.lang.Exception
-import java.lang.Long.getLong
 
 class PostingActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
@@ -34,6 +36,19 @@ class PostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //툴바 설정
+        val toolbar = findViewById<Toolbar>(R.id.postingtoolbar)
+        setSupportActionBar(toolbar)
+        val ac: ActionBar? = supportActionBar
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_foreground)
+
+        fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            menuInflater.inflate(R.menu.menu_back, menu)
+            return true
+        }
 
         Firebase.auth.currentUser ?: finish() // if not authenticated, finish this activity
         storage = Firebase.storage
@@ -52,13 +67,20 @@ class PostingActivity : AppCompatActivity() {
             openGallery()
         }
 
-        binding.backbtn.setOnClickListener {
-            //마이페이지로 돌아가기기
-       }
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            R.id.menu_back -> {
+                //뒤로가기버튼 눌렀을때
+                Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                return super.onOptionsItemSelected(item)
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     private fun addPost(postMap: HashMap<String,String>) {
-        val idIdx =
         postsCollectionRef.add(postMap)
             .addOnSuccessListener {
                 uploadFile("${System.currentTimeMillis()}.png",it.id)

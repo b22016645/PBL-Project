@@ -5,6 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/postingtoolbar"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        app:subtitleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="새 게시물"
+        app:titleTextColor="@color/white" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_below = "@id/postingtoolbar"
+        android:background="@color/gray"
+        app:layout_constraintTop_toBottomOf="@+id/postingtoolbar"
+        tools:layout_editor_absoluteX="-2dp" />
 
     <EditText
         android:id="@+id/postcontent"
@@ -56,30 +78,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/backbtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/round_border_white"
-        android:text="@string/left"
-        android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/toptext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="새 게시물"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/postcontent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
