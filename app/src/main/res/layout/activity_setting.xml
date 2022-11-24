@@ -7,6 +7,45 @@
     android:background="@color/black">
 
 
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="34dp"
+        android:layout_height="29dp"
+        android:text="성별"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sex"
+        app:layout_constraintStart_toStartOf="@+id/editname"
+        app:layout_constraintTop_toTopOf="@+id/sex" />
+
+    <RadioGroup
+        android:id="@+id/sex"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/editnamebtn"
+        app:layout_constraintTop_toBottomOf="@+id/editname">
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="92dp"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/white"
+            android:text="male"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="106dp"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/white"
+            android:text="female"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/donebtn"
         android:layout_width="60dp"
@@ -28,13 +67,26 @@
         android:text="변경"
         android:textColor="@color/white"
         android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintBottom_toBottomOf="@+id/editname"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintStart_toEndOf="@+id/editname"
+        app:layout_constraintTop_toTopOf="@+id/editname" />
 
     <Button
-        android:id="@+id/editnamebtn2"
+        android:id="@+id/editnamebtn3"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:background="@drawable/round_border_white"
+        android:text="변경"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editmessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editmessage"
+        app:layout_constraintTop_toTopOf="@+id/editmessage" />
+
+    <Button
+        android:id="@+id/editimagebtn"
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:background="@drawable/round_border_white"
@@ -88,11 +140,11 @@
         android:textColor="@color/white"
         android:textSize="18dp"
         android:layout_marginLeft="15dp"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintStart_toStartOf="@+id/editname"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/editname"
         android:layout_width="180dp"
         android:layout_height="49dp"
         android:layout_marginStart="24dp"
@@ -103,24 +155,28 @@
         app:layout_constraintStart_toEndOf="@+id/profileimage"
         app:layout_constraintTop_toTopOf="@+id/profileimage" />
 
-    <RadioGroup
-        android:layout_width="120dp"
-        android:layout_height="98dp"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="246dp" >
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="상태메세지"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/editimagebtn" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="58dp"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="57dp"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-    </RadioGroup>
+    <EditText
+        android:id="@+id/editmessage"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:background="@drawable/round_border_white"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
