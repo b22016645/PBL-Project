@@ -1,122 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".MainActivity">
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="마이페이지"
-        app:titleTextColor="@color/white" />
+            android:id="@+id/toolbar1"
+            android:layout_width="409dp"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="마이페이지"
+            app:titleTextColor="@color/white" />
 
-    <ImageView
-        android:id="@+id/MyProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1"
-        app:srcCompat="@drawable/profile_foreground" />
+        <ImageView
+            android:id="@+id/MyProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar1"
+            app:srcCompat="@drawable/profile_foreground"
+            android:layout_below="@id/toolbar1"/>
 
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Name"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/MyProfile"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Name"
+            android:textColor="@color/white"
+            android:layout_below="@id/toolbar1"
+            android:layout_toRightOf="@+id/MyProfile"
+             />
 
-    <TextView
-        android:id="@+id/StateMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="상태메세지 입니다."
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/MyProfile"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
+        <TextView
+            android:id="@+id/StateMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="상태메세지 입니다."
+            android:textColor="@color/white"
+            android:layout_below="@id/Name"
+            android:layout_toRightOf="@+id/MyProfile" />
 
-    <TextView
-        android:id="@+id/Follower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="48dp"
-        android:text="팔로워"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/Name"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
+        <TextView
+            android:id="@+id/Follower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar1"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/Name"
+            android:text="팔로워"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/Following"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="팔로잉"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Follower"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
+        <TextView
+            android:id="@+id/Following"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="팔로잉"
+            android:textColor="@color/white"
+            android:layout_below="@id/toolbar1"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/Follower" />
 
-    <TextView
-        android:id="@+id/Follower_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:text="25"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/StateMessage"
-        app:layout_constraintTop_toBottomOf="@+id/Follower" />
+        <TextView
+            android:id="@+id/Follower_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/Name"
+            android:text="25"
+            android:textColor="@color/white"
+            android:layout_below="@id/Follower" />
 
-    <TextView
-        android:id="@+id/Following_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="25"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Follower_number"
-        app:layout_constraintTop_toBottomOf="@+id/Following" />
+        <TextView
+            android:id="@+id/Following_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:textColor="@color/white"
+            android:layout_below="@id/Following"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/Follower" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/MyProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MyProfile"
-        app:layout_constraintVertical_bias="1.0" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_below="@id/MyProfile"
+            android:layout_marginTop="16dp"
+            app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/account_recyclerview"
+        android:id = "@+id/re"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        android:layout_below="@id/view"
+        android:layout_marginTop="16dp"/>
 
-
-
-    <!--            android:layout_width=""-->
-    <!--            android:layout_height=""/>-->
 
 </RelativeLayout>
+
+
+
+
+
+
