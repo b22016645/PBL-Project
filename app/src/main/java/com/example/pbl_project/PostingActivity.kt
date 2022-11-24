@@ -22,12 +22,13 @@ import java.lang.Long.getLong
 class PostingActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
     lateinit var binding: ActivityPostingBinding
+    private val uid = Firebase.auth.currentUser?.uid
 
     val db: FirebaseFirestore = Firebase.firestore
     val usersCollectionRef = db.collection("users")
-    val IDDocumentRef = usersCollectionRef.document("GhlQreOyU85QsAUi2Fpa")
+    val IDDocumentRef = usersCollectionRef.document(uid!!)
     val postsCollectionRef = IDDocumentRef.collection("posts")
-    private var photoURL : String = ""
+    private var photoURI : Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class PostingActivity : AppCompatActivity() {
             val postMap = hashMapOf(
                 "content" to content,
                 "like" to "0",
-                "photo" to photoURL
+                "photo" to photoURI.toString()
             )
             addPost(postMap)
         }
@@ -57,15 +58,15 @@ class PostingActivity : AppCompatActivity() {
     }
 
     private fun addPost(postMap: HashMap<String,String>) {
-        val idIdx = "id"
-        uploadFile(getLong(idIdx),"image1")
+        val idIdx =
         postsCollectionRef.add(postMap)
             .addOnSuccessListener {
-                //마이페이지로 돌아가기
+                uploadFile("${System.currentTimeMillis()}.png",it.id)
                 Log.d("로그","postingsuccess")
             }.addOnFailureListener {
                 Log.d("로그","postingfailed")
             }
+        //마이페이지돌아가기
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -73,13 +74,15 @@ class PostingActivity : AppCompatActivity() {
         startActivityForResult(intent,1)
     }
 
-    private fun uploadFile(file_id: Long, fileName: String) {
-        val imageRef = storage.reference.child("photoimages/GhlQreOyU85QsAUi2Fpa/${fileName}") // StorageReference
-        val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            file_id)
-        imageRef.putFile(contentUri).addOnCompleteListener {
+    private fun uploadFile(fileName: String, postID: String) {
+        val imageRef = storage.reference.child("photoimages/${postID}/${fileName}") // StorageReference
+
+        imageRef.putFile(photoURI!!).addOnCompleteListener {
             if (it.isSuccessful) {
                 Snackbar.make(binding.root, "Upload completed.", Snackbar.LENGTH_SHORT).show()
+            }
+            else {
+                Log.d("로그","uploadfile falied ㅠㅠ")
             }
         }
     }
@@ -90,7 +93,7 @@ class PostingActivity : AppCompatActivity() {
         if(resultCode == Activity.RESULT_OK) {
             if(requestCode == 1) {
                 val imageURL : Uri? = data?.data
-                photoURL = imageURL.toString()
+                photoURI = imageURL
 
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,imageURL)
