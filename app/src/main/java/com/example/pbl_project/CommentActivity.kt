@@ -9,17 +9,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.pbl_project.databinding.ActivityCommentBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class CommentActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommentBinding
-    val postID = "GhlQreOyU85QsAUi2Fpa"
+    private val uid = Firebase.auth.currentUser?.uid
+    val postID = "mRIWK4AeJjC3EUWl00at" //postID 넘어올때같이받기
 
     val db: FirebaseFirestore = Firebase.firestore
     val usersCollectionRef = db.collection("users")
-    val IDDocumentRef = usersCollectionRef.document(postID)
+    val IDDocumentRef = usersCollectionRef.document(uid!!)
     val postsCollectionRef = IDDocumentRef.collection("posts")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +46,16 @@ class CommentActivity : AppCompatActivity() {
         refreshLike()
 
         binding.like.setOnClickListener {
-            var like = ""
             postsCollectionRef.document(postID).get()
                 .addOnSuccessListener {
-                    like = it["like"].toString()
+                    var like = it["like"].toString()
                     var likenum = like.toInt()
                     likenum ++
                     like = likenum.toString()
+
+                    postsCollectionRef.document(postID).update("like", like)
+                        .addOnSuccessListener { refreshLike() }
                 }
-            postsCollectionRef.document(postID).update("like", like)
-                .addOnSuccessListener { refreshLike() }
         }
 
         binding.addcommentbtn.setOnClickListener {
@@ -63,12 +65,11 @@ class CommentActivity : AppCompatActivity() {
             val commentMap = hashMapOf(
                 "comment" to comment,
                 "like" to like,
-                "id" to "GhlQreOyU85QsAUi2Fpa"
+                "id" to uid!!
             )
             addComment(commentMap)
         }
     }
-
 
     //액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -93,7 +94,7 @@ class CommentActivity : AppCompatActivity() {
 
     private fun addComment(commentMap: HashMap<String,String>){
         postsCollectionRef
-            .document("MpoE6QpJRz0DBbjsJOBe")
+            .document(postID)
             .collection("comments")
             .add(commentMap)
             .addOnSuccessListener {
@@ -105,16 +106,16 @@ class CommentActivity : AppCompatActivity() {
     }
 
     private fun refreshView() {
-
+        postsCollectionRef.document(postID).collection("comments").get()
+            .addOnSuccessListener {
+                //view에 댓글 띄우기
+            }
     }
 
     private fun refreshLike() {
         postsCollectionRef.document(postID).get()
             .addOnSuccessListener {
-                var like = it["like"].toString()
-                var likenum = like.toInt()
-                likenum ++
-                binding.likenum.setText(likenum)
+                binding.likenum.setText(it["like"].toString())
             }
     }
 }
