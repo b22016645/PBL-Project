@@ -6,13 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/commenttoolbar"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        app:subtitleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"

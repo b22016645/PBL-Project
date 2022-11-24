@@ -6,9 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.ContextMenu
+import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -44,29 +43,11 @@ class PostingActivity : AppCompatActivity() {
         val ac: ActionBar? = supportActionBar
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_foreground)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_whiteback_foreground)
 
-        fun onCreateOptionsMenu (
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            super.onCreateContextMenu(menu, v, menuInfo)
-        }
-
-        fun onContextItemSelected(item: MenuItem): Boolean {
-            return super.onContextItemSelected(item)
-        }
-
-        fun onOptionsItemSelected(item: MenuItem): Boolean {
-            when(item?.itemId){
-                R.id.menu_back -> {
-                    //뒤로가기버튼 눌렀을때
-                    Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
-                    return super.onOptionsItemSelected(item)
-                }
-                else -> return super.onOptionsItemSelected(item)
-            }
+        fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            menuInflater.inflate(R.menu.menu_back, menu)
+            return true
         }
 
         Firebase.auth.currentUser ?: finish() // if not authenticated, finish this activity
@@ -86,6 +67,18 @@ class PostingActivity : AppCompatActivity() {
             openGallery()
         }
 
+    }
+
+    //액션버튼 클릭 했을 때
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> {
+                //뒤로가기 버튼 눌렀을 때
+                Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                return super.onOptionsItemSelected(item)
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     private fun addPost(postMap: HashMap<String,String>) {

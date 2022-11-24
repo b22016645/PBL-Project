@@ -33,8 +33,12 @@ class CommentActivity : AppCompatActivity() {
         val ac: ActionBar? = supportActionBar
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_foreground)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_whiteback_foreground)
 
+        fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            menuInflater.inflate(R.menu.menu_back, menu)
+            return true
+        }
         getContent()
         refreshView()
         refreshLike()
@@ -65,17 +69,13 @@ class CommentActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_back, menu)
-        return true
-    }
 
+    //액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
-            R.id.menu_back -> {
-                //뒤로가기버튼 눌렀을때
-                //피드페이지로 돌아가기
-                Snackbar.make(binding.root, "피드페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+            android.R.id.home -> {
+                //뒤로가기 버튼 눌렀을 때
+                Snackbar.make(binding.root, "메인페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
                 return super.onOptionsItemSelected(item)
             }
             else -> return super.onOptionsItemSelected(item)
