@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    tools:src="@mipmap/ic_launcher"
+                    android:id="@+id/mypageimage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/view"
+                    tools:ignore="NotSibling" />
+                <TextView
+                    android:id="@+id/mypagecontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="content"
+                    android:textColor="@android:color/black"
+                    android:layout_below="@id/mypageimage"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/like"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="좋아요"
+                    android:layout_below="@id/mypagecontent"
+                    />
+                <TextView
+                    android:id="@+id/like_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="0"
+                    android:layout_below="@id/mypagecontent"
+                    android:layout_toRightOf="@id/like"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <Button
+                    android:id="@+id/comment"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="댓글"
+                    android:layout_toRightOf="@id/like_number"
+                    android:layout_below="@id/mypagecontent"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/comment_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="0"
+                    android:layout_below="@id/mypagecontent"
+                    android:layout_toRightOf="@id/comment"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    />
+                <Button
+                    android:id="@+id/share"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mypagecontent"
+                    android:layout_toRightOf="@id/comment_number"
+                    android:text=">"
+                    android:layout_marginLeft="135dp"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+

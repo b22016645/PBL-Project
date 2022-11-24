@@ -28,101 +28,13 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar1"
         tools:layout_editor_absoluteX="-2dp" />
 
-
-
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/re"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/view"
-        >
+        android:layout_marginTop="16dp"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:id="@+id/UserProfile_feed"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/profile_foreground"/>
-
-                <TextView
-                    android:id="@+id/nickname_feed"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:text="닉네임"
-                    android:layout_toRightOf="@id/UserProfile_feed" />
-
-                <ImageView
-                    android:id="@+id/feedimage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_below="@id/UserProfile_feed"
-                    app:srcCompat="@color/white" />
-                <TextView
-                    android:id="@+id/content_feed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="content"
-                    android:textColor="@android:color/black"
-                    android:layout_below="@id/feedimage"
-                    android:textSize="20sp"/>
-
-                <Button
-                    android:id="@+id/like_feed"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="좋아요"
-                    android:layout_below="@id/content_feed"
-                    />
-                <TextView
-                    android:id="@+id/like_number_feed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    android:text="0"
-                    android:layout_below="@id/content_feed"
-                    android:layout_toRightOf="@id/like_feed"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"/>
-                <Button
-                    android:id="@+id/comment_feed"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="댓글"
-                    android:layout_toRightOf="@id/like_number_feed"
-                    android:layout_below="@id/content_feed"
-                    android:layout_marginLeft="15dp"
-                    />
-                <TextView
-                    android:id="@+id/comment_number_feed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dp"
-                    android:text="0"
-                    android:layout_below="@id/content_feed"
-                    android:layout_toRightOf="@id/comment_feed"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"/>
-
-                <Button
-                    android:id="@+id/share_feed"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/content_feed"
-                    android:layout_toRightOf="@id/comment_number_feed"
-                    android:text=">"
-                    android:layout_marginLeft="135dp"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
 
 </RelativeLayout>
