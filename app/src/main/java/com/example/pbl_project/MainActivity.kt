@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                 Intent(this,CommentActivity::class.java))
             finish()
         }
+        binding.settingbtn.setOnClickListener {
+            startActivity(
+                Intent(this,SettingActivity::class.java))
+            finish()
+        }
 
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener {
 //            binding.textFCMToken.text = if (it.isSuccessful) it.result else "Token Error!"
