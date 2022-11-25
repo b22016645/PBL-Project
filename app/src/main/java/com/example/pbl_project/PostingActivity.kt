@@ -58,7 +58,8 @@ class PostingActivity : AppCompatActivity() {
             val postMap = hashMapOf(
                 "content" to content,
                 "like" to "0",
-                "photo" to photoURI.toString()
+                "photo" to photoURI.toString(),
+                "id" to uid!!
             )
             addPost(postMap)
         }

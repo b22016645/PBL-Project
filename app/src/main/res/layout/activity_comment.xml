@@ -51,6 +51,14 @@
         app:layout_constraintTop_toBottomOf="@+id/like" />
 
     <ImageView
+        android:id="@+id/commentprofile"
+        android:layout_width="65dp"
+        android:layout_height="53dp"
+        app:layout_constraintStart_toStartOf="@+id/commentview"
+        app:layout_constraintTop_toTopOf="@+id/commentview"
+        app:srcCompat="@drawable/profile_foreground" />
+
+    <ImageView
         android:id="@+id/profileimage"
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -114,5 +122,26 @@
         android:text=""
         app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <TextView
+        android:id="@+id/commentnick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nickname"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/commentprofile"
+        app:layout_constraintStart_toStartOf="@+id/commentprofile"
+        app:layout_constraintTop_toBottomOf="@+id/commentprofile" />
+
+    <TextView
+        android:id="@+id/commentcontent"
+        android:layout_width="224dp"
+        android:layout_height="59dp"
+        android:background="@drawable/round_border_white"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/commentnick"
+        app:layout_constraintEnd_toEndOf="@+id/commentview"
+        app:layout_constraintStart_toEndOf="@+id/commentprofile"
+        app:layout_constraintTop_toTopOf="@+id/commentprofile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
