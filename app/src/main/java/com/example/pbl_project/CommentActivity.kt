@@ -38,6 +38,7 @@ class CommentActivity : AppCompatActivity() {
         binding = ActivityCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Firebase.auth.currentUser ?: finish()
         storage = Firebase.storage
 
         //툴바 설정
