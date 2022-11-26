@@ -71,6 +71,13 @@ class SettingActivity : AppCompatActivity() {
                 }
         }
 
+        binding.logoutbtn.setOnClickListener {
+            Firebase.auth.signOut()
+            startActivity(
+                Intent(this,LoginActivity::class.java))
+            finish()
+        }
+
     }
     //액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
