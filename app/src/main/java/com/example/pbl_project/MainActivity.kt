@@ -36,17 +36,14 @@ class MainActivity : AppCompatActivity() {
         binding.postbtn.setOnClickListener {
             startActivity(
                 Intent(this,PostingActivity::class.java))
-            finish()
         }
         binding.commentbtn.setOnClickListener {
             startActivity(
                 Intent(this,CommentActivity::class.java))
-            finish()
         }
         binding.settingbtn.setOnClickListener {
             startActivity(
                 Intent(this,SettingActivity::class.java))
-            finish()
         }
 
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener {

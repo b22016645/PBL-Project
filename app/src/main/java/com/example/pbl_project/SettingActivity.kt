@@ -30,7 +30,7 @@ class SettingActivity : AppCompatActivity() {
     val db: FirebaseFirestore = Firebase.firestore
     val usersCollectionRef = db.collection("users")
     val IDDocumentRef = usersCollectionRef.document(uid!!)
-    private var photoURI : Uri? = null
+    private var profileURI : Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +70,12 @@ class SettingActivity : AppCompatActivity() {
             android.R.id.home -> {
                 //완료 버튼 눌렀을 때
                 addProfileImage()
-                IDDocumentRef.get()
-                    .addOnSuccessListener {
-                        //성별 저장
-                    }
+//                IDDocumentRef.get()
+//                    .addOnSuccessListener {
+//                        //성별 저장
+//                    }
                 Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                finish()
                 return super.onOptionsItemSelected(item)
             }
             else -> return super.onOptionsItemSelected(item)
@@ -90,7 +91,7 @@ class SettingActivity : AppCompatActivity() {
     private fun uploadFile(fileName: String) {
         val imageRef = storage.reference.child("profileimages/${uid!!}/${fileName}") // StorageReference
 
-        imageRef.putFile(photoURI!!).addOnCompleteListener {
+        imageRef.putFile(profileURI!!).addOnCompleteListener {
             if (it.isSuccessful) {
                 Snackbar.make(binding.root, "Upload completed.", Snackbar.LENGTH_SHORT).show()
             }
@@ -106,10 +107,10 @@ class SettingActivity : AppCompatActivity() {
         if(resultCode == Activity.RESULT_OK) {
             if(requestCode == 1) {
                 val imageURL : Uri? = data?.data
-                photoURI = imageURL
+                profileURI = imageURL
 
                 try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,imageURL)
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,profileURI)
                     binding.profileimage.setImageBitmap(bitmap)
 
                 }catch (e: Exception){
@@ -124,6 +125,9 @@ class SettingActivity : AppCompatActivity() {
 
     private fun addProfileImage() {
         //id 저장해놓기
-        uploadFile("${System.currentTimeMillis()}.png")
+        IDDocumentRef.update("profile", profileURI)
+            .addOnSuccessListener {
+                uploadFile("${profileURI}.png")
+            }
     }
 }

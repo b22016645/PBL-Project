@@ -76,6 +76,7 @@ class PostingActivity : AppCompatActivity() {
             android.R.id.home -> {
                 //뒤로가기 버튼 눌렀을 때
                 Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                finish()
                 return super.onOptionsItemSelected(item)
             }
             else -> return super.onOptionsItemSelected(item)

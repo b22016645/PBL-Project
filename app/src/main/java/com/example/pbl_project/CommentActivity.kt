@@ -87,6 +87,7 @@ class CommentActivity : AppCompatActivity() {
             android.R.id.home -> {
                 //뒤로가기 버튼 눌렀을 때
                 Snackbar.make(binding.root, "메인페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+                finish()
                 return super.onOptionsItemSelected(item)
             }
             else -> return super.onOptionsItemSelected(item)
@@ -101,8 +102,7 @@ class CommentActivity : AppCompatActivity() {
                 usersCollectionRef.document(id).get()
                     .addOnSuccessListener {
                         binding.nickname.setText(it["nickname"].toString())
-
-                        val imageRef = storage.reference.child("photoimages/${postID}")
+                        val imageRef = storage.reference.child("profileimages/${id}/${it["profile"].toString()}.png")
                         displayImageRef(imageRef, binding.profileimage)
                     }.addOnFailureListener {
                         Log.d("로그","게시글 가져오기 실패")
