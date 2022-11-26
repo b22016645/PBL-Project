@@ -31,15 +31,20 @@ class SignUpActivity : AppCompatActivity() {
             val pw = binding.pw.text.toString()
             val confirmPw = binding.confirmPw.text.toString()
             val name = binding.name.text.toString()
-            val sex = binding.sex.checkedRadioButtonId.toString()
+
+            binding.sex.setOnCheckedChangeListener{group,checkID->
+                when(checkID){
+                    R.id.male -> info.sex = true
+                    R.id.female -> info.sex = false
+                }
+            }
 
             info.uid = firebaseAuth.uid
             info.email = email
             info.nickname = name
-            //male = 2131231238 female = 2131231237
-            info.sex = sex
+            info.message = ""
 
-            if (email.isNotEmpty() && pw.isNotEmpty() && confirmPw.isNotEmpty() && name.isNotEmpty() && sex.isNotEmpty()){
+            if (email.isNotEmpty() && pw.isNotEmpty() && confirmPw.isNotEmpty() && name.isNotEmpty()){
                 if(!email.contains("@") && email.length<6){
                     var toast = Toast.makeText(this,"이메일 형식이 맞지 않습니다.",Toast.LENGTH_SHORT).show()
                     Log.d("로그",toast.toString())

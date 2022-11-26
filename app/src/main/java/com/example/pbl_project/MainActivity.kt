@@ -18,9 +18,8 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val info = userInfo()
-
         if (Firebase.auth.currentUser == null){
+            val info = userInfo()
             info.uid=Firebase.auth.currentUser?.uid
             FirebaseFirestore.getInstance().collection("users")?.document(Firebase.auth.uid.toString())?.set(info)
             startActivity(

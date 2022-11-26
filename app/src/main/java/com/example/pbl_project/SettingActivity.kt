@@ -53,14 +53,22 @@ class SettingActivity : AppCompatActivity() {
             return true
         }
 
+        checksex()
+
         binding.editimagebtn.setOnClickListener {
             openGallery()
         }
         binding.editmessagebtn.setOnClickListener {
-
+            IDDocumentRef.update("message", binding.editmessage.text.toString())
+                .addOnSuccessListener {
+                    Snackbar.make(binding.root, "상태메세지 변경 완료", Snackbar.LENGTH_SHORT).show()
+                }
         }
         binding.editnamebtn.setOnClickListener {
-
+            IDDocumentRef.update("nick", binding.editname.text.toString())
+                .addOnSuccessListener {
+                    Snackbar.make(binding.root, "닉네임 변경 완료", Snackbar.LENGTH_SHORT).show()
+                }
         }
 
     }
@@ -70,10 +78,11 @@ class SettingActivity : AppCompatActivity() {
             android.R.id.home -> {
                 //완료 버튼 눌렀을 때
                 addProfileImage()
-//                IDDocumentRef.get()
-//                    .addOnSuccessListener {
-//                        //성별 저장
-//                    }
+                //성별 저장
+                IDDocumentRef.update("sex", profileURI)
+                    .addOnSuccessListener {
+
+                    }
                 Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
                 finish()
                 return super.onOptionsItemSelected(item)
@@ -96,7 +105,7 @@ class SettingActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Upload completed.", Snackbar.LENGTH_SHORT).show()
             }
             else {
-                Log.d("로그","uploadfile falied ㅠㅠ")
+                Log.d("로그","uploadfile falied")
             }
         }
     }
@@ -119,7 +128,7 @@ class SettingActivity : AppCompatActivity() {
 
             }
         } else {
-            Log.d("로그","에러에러")
+            Log.d("로그","gallery error")
         }
     }
 
@@ -128,6 +137,18 @@ class SettingActivity : AppCompatActivity() {
         IDDocumentRef.update("profile", profileURI)
             .addOnSuccessListener {
                 uploadFile("${profileURI}.png")
+            }
+    }
+
+    private fun checksex() {
+        IDDocumentRef.get()
+            .addOnSuccessListener {
+                val sex = it["sex"]
+                if (sex == true) {
+                    binding.sex.check(R.id.male)
+                } else {
+                    binding.sex.check(R.id.female)
+                }
             }
     }
 }
