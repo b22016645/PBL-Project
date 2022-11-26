@@ -31,6 +31,7 @@ class SettingActivity : AppCompatActivity() {
     val usersCollectionRef = db.collection("users")
     val IDDocumentRef = usersCollectionRef.document(uid!!)
     private var profileURI : Uri? = null
+    private var usersex : Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +79,13 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.sex.setOnCheckedChangeListener{group,checkID->
+            when(checkID){
+                R.id.male -> usersex = true
+                R.id.female -> usersex = false
+            }
+        }
+
     }
     //액션버튼 클릭 했을 때
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,9 +94,9 @@ class SettingActivity : AppCompatActivity() {
                 //완료 버튼 눌렀을 때
                 addProfileImage()
                 //성별 저장
-                IDDocumentRef.update("sex", profileURI)
+                IDDocumentRef.update("sex", usersex)
                     .addOnSuccessListener {
-
+                        Snackbar.make(binding.root, "성별 저장완료", Snackbar.LENGTH_SHORT).show()
                     }
                 Snackbar.make(binding.root, "마이페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
                 finish()
