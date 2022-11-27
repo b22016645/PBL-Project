@@ -24,6 +24,7 @@
         <activity android:name=".MyPageActivity"/>
         <activity android:name=".ResetPwActivity"/>
         <activity android:name=".CommentActivity"/>
+        <activity android:name=".FeedActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

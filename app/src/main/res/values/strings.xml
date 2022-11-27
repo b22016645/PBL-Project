@@ -2,4 +2,5 @@
     <string name="app_name">PBL-Project</string>
     <string name="action_sign_out">signout</string>
     <string name="left">&lt;</string>
+    <plurals name="like_number_feed" />
 </resources>
