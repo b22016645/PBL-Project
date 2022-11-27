@@ -1,5 +1,6 @@
 package com.example.pbl_project
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
         binding.settingbtn.setOnClickListener {
             startActivity(
                 Intent(this,SettingActivity::class.java))
+        }
+        binding.feedbtn.setOnClickListener {
+            startActivity(
+                Intent(this,FeedActivity::class.java))
+
         }
 
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener {
