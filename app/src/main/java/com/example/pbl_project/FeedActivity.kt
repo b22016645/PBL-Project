@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pbl_project.databinding.ActivityFeedBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -90,12 +91,23 @@ class FeedActivity : AppCompatActivity() {
             when (item!!.itemId) {
                 android.R.id.home -> { // 메뉴 버튼
                     startActivity(
-                        Intent(this, MyPageActivity::class.java)
+                        Intent(this, FeedActivity::class.java)
                     )
                 }
             }
             return super.onOptionsItemSelected(item)
         }
+//         fun onOptionsItemSelected(item: MenuItem): Boolean {
+//            when(item?.itemId){
+//                android.R.id.home -> {
+//                    //뒤로가기 버튼 눌렀을 때
+//                    Snackbar.make(binding.root, "메인페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
+//                    finish()
+//                    return super.onOptionsItemSelected(item)
+//                }
+//                else -> return super.onOptionsItemSelected(item)
+//            }
+//        }
 
 
 
@@ -143,13 +155,7 @@ class FeedActivity : AppCompatActivity() {
 
         }
 
-//        var btcomment : Button= findViewById<Button>(R.id.comment_feed)
-//        btcomment.setOnClickListener {
-//            startActivity(
-//                Intent(this,CommentActivity::class.java)
-//            )
-//
-//        }
+
 //
 //
 //        binding.recyclerview.like_feed.setOnClickListener {
@@ -164,16 +170,16 @@ class FeedActivity : AppCompatActivity() {
 //                        .addOnSuccessListener { refreshLike() }
 //                }
 //            }
+
+
+        }
 //
-//
+//        fun refreshLike() {
+//            postIDDocumentRef.get()
+//                .addOnSuccessListener {
+//                    binding.recyclerview.like_number_feed.setText(it["like"].toString())
+//                }
 //        }
 
-        fun refreshLike() {
-            postIDDocumentRef.get()
-                .addOnSuccessListener {
-                    binding.recyclerview.like_number_feed.setText(it["like"].toString())
-                }
-        }
 
-    }
 }

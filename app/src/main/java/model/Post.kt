@@ -8,8 +8,7 @@ import com.google.j2objc.annotations.Property
 
 data class Post (
     var content: String = "null",
-    @get:PropertyName("photo") @set:PropertyName("photo") var imageUrl: String = "https://firebasestorage.googleapis.com/v0/b/projectpbl-a3842.appspot.com" +
-            "/o/photoimages%2FmRIWK4AeJjC3EUWl00at%2F1669269637994.png?alt=media&token=377ebac0-21e4-4c97-816f-97cc10004ac5\"",
+    @get:PropertyName("photo") @set:PropertyName("photo") var imageUrl: String = "https://firebasestorage.googleapis.com/v0/b/projectpbl-a3842.appspot.com/o/photoimages%2Fs8lc8jFaqTjrnlGVSeky%2F1669370164199.png?alt=media&token=90a4fac7-4b2d-4995-b73f-015349ab4176",
 //    @get:PropertyName("photo") @set:PropertyName("photo") var imageUrl: String = ",
     @get:PropertyName("like") @set:PropertyName("like") var like: String = "0",
     var id : String = "null"
