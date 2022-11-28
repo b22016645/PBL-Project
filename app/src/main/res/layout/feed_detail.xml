@@ -37,12 +37,15 @@
             android:textColor="@color/white"
             android:text="닉네임" />
 
+
         <ImageView
             android:id="@+id/feedimage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:layout_below="@id/UserProfile_feed"
-            tools:src="@mipmap/ic_launcher" />
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
+
 
         <TextView
             android:id="@+id/content_feed"
@@ -92,7 +95,7 @@
             android:text="0" />
 
         <Button
-            android:id="@+id/share_feed"
+            android:id="@+id/share"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/content_feed"
@@ -101,4 +104,5 @@
             android:text=">"
             tools:ignore="TouchTargetSizeCheck" />
     </RelativeLayout>
+
 </RelativeLayout>

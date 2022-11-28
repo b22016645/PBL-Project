@@ -33,10 +33,10 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures{
-        viewBinding = true
+        viewBinding true
     }
     dataBinding{
-        enabled = true
+        enabled true
     }
     namespace 'com.example.pbl_project'
 }
