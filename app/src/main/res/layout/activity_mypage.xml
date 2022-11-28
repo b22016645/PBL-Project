@@ -19,7 +19,7 @@
         app:titleTextColor="@color/white" />
 
     <ImageView
-        android:id="@+id/MyProfile"
+        android:id="@+id/myprofile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar1"
@@ -30,75 +30,52 @@
         app:srcCompat="@drawable/profile_foreground" />
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Name"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/MyProfile"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/myprofile"
         app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
 
     <TextView
-        android:id="@+id/StateMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Name"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:id="@+id/statemessage"
+        android:layout_width="111dp"
+        android:layout_height="69dp"
+        android:layout_below="@id/name"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:background="@drawable/view_border_white"
         android:text="상태메세지 입니다."
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/MyProfile"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="@+id/myprofile"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/Follower"
+        android:id="@+id/follower_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar1"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="40dp"
-        android:text="팔로워"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/Name"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
-
-    <TextView
-        android:id="@+id/Following"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar1"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:layout_toRightOf="@+id/Follower"
-        android:text="팔로잉"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/Follower"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
-
-    <TextView
-        android:id="@+id/Follower_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="8dp"
         android:text="25"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/Name"
-        app:layout_constraintTop_toBottomOf="@+id/Follower" />
+        app:layout_constraintEnd_toEndOf="@+id/followerbtn"
+        app:layout_constraintStart_toStartOf="@+id/followerbtn"
+        app:layout_constraintTop_toBottomOf="@+id/followerbtn" />
 
     <TextView
-        android:id="@+id/Following_number"
+        android:id="@+id/following_number"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_below="@id/Following"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/followingbtn"
         android:text="25"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/Follower_number"
-        app:layout_constraintTop_toBottomOf="@+id/Following" />
+        app:layout_constraintEnd_toEndOf="@+id/followingbtn"
+        app:layout_constraintStart_toStartOf="@+id/followingbtn"
+        app:layout_constraintTop_toBottomOf="@+id/followingbtn" />
 
     <View
         android:id="@+id/view"
@@ -106,7 +83,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
         android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/MyProfile"
+        app:layout_constraintTop_toBottomOf="@+id/myprofile"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -116,5 +93,41 @@
         android:layout_below="@id/view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/followerbtn"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:background="@color/black"
+        android:text="팔로워"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/statemessage"
+        app:layout_constraintTop_toTopOf="@+id/name" />
+
+    <Button
+        android:id="@+id/followingbtn"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:background="@color/black"
+        android:text="팔로잉"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/followerbtn"
+        app:layout_constraintTop_toTopOf="@+id/name" />
+
+    <Button
+        android:id="@+id/dofollowbtn"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text="팔로우하기"
+        android:textColor="@color/white"
+        android:background="@drawable/round_border_white"
+        app:layout_constraintBottom_toBottomOf="@+id/statemessage"
+        app:layout_constraintEnd_toEndOf="@+id/followingbtn"
+        app:layout_constraintStart_toStartOf="@+id/followerbtn"
+        app:layout_constraintTop_toBottomOf="@+id/follower_number" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.pbl_project
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pbl_project.databinding.ActivityCommentBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -19,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_comment.*
 
 class CommentActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
@@ -33,10 +36,19 @@ class CommentActivity : AppCompatActivity() {
     val postIDDocumentRef = postsCollectionRef.document(postID)
     val commentCollectionRef = postIDDocumentRef.collection("comments")
 
+    lateinit var commentAdapter: CommentAdapter
+    val datas = mutableListOf<CommentData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCommentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val layoutManager = LinearLayoutManager(this)
+        commentview.layoutManager = layoutManager
+
+        commentAdapter = CommentAdapter(this)
+        commentview.adapter = commentAdapter
 
         Firebase.auth.currentUser ?: finish()
         storage = Firebase.storage
@@ -53,6 +65,7 @@ class CommentActivity : AppCompatActivity() {
             menuInflater.inflate(R.menu.menu_back, menu)
             return true
         }
+
         getContent()
         settingView()
         refreshLike()
@@ -72,12 +85,15 @@ class CommentActivity : AppCompatActivity() {
 
         binding.addcommentbtn.setOnClickListener {
             //등록
-            val comment = binding.comment.text.toString()
-            val commentMap = hashMapOf(
-                "comment" to comment,
-                "id" to uid!!
-            )
-            addComment(commentMap)
+            var comment = binding.comment.text.toString()
+            IDDocumentRef.get()
+                .addOnSuccessListener {
+                    val commentMap = hashMapOf(
+                        "comment" to comment,
+                        "id" to uid!!
+                    )
+                    addComment(commentMap)
+                }
         }
     }
 
@@ -112,21 +128,51 @@ class CommentActivity : AppCompatActivity() {
             }
     }
     private fun addComment(commentMap: HashMap<String,String>){
-        commentCollectionRef
-            .add(commentMap)
+        commentCollectionRef.add(commentMap)
             .addOnSuccessListener {
                 createCommentView(it.id)
+            }.addOnFailureListener {
+                Snackbar.make(binding.root, "댓글 띄우기 실패", Snackbar.LENGTH_SHORT).show()
+            }
+    }
+    private fun settingView() {
+        commentAdapter = CommentAdapter(this)
+        commentview.adapter = commentAdapter
+
+        commentCollectionRef.get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    var commentID = document.id
+                    createCommentView(commentID)
+                }
             }.addOnFailureListener {
 
             }
     }
-    private fun settingView() {
-        commentCollectionRef.get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    createCommentView(document.id)
+
+    private fun createCommentView(commentID : String) {
+        commentAdapter = CommentAdapter(this)
+        commentview.adapter = commentAdapter
+
+        datas.apply {
+            commentCollectionRef.document(commentID).get()
+                .addOnSuccessListener {
+                    var content = it["comment"].toString()
+                    var id = it["id"].toString()
+                    usersCollectionRef.document(id).get()
+                        .addOnSuccessListener {
+                            val nick = it["nickname"].toString()
+                            val imageRef = storage.reference.child("profileimages/${id}/${it["profile"].toString()}.png")
+                            imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+                                var bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                                add(CommentData(img = bmp, nick = nick, content = content ))
+                            }
+                        }
                 }
-            }
+
+            commentAdapter.datas = datas
+            commentAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun refreshLike() {
@@ -136,13 +182,6 @@ class CommentActivity : AppCompatActivity() {
             }
     }
 
-    private fun createCommentView(commentID : String) {
-        commentCollectionRef.document(commentID).get()
-            .addOnSuccessListener {
-                val textViewNm : TextView = TextView(applicationContext)
-                textViewNm.setText(it["content"].toString())
-            }
-    }
     private fun displayImageRef(imageRef: StorageReference?, view: ImageView) {
         imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
             val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)

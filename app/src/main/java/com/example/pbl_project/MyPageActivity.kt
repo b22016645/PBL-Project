@@ -1,24 +1,42 @@
 package com.example.pbl_project
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.pbl_project.databinding.ActivityMypageBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 
 class MyPageActivity : AppCompatActivity() {
-
+    lateinit var storage: FirebaseStorage
     lateinit var binding: ActivityMypageBinding
+    private val uid = Firebase.auth.currentUser?.uid
+
+    val db: FirebaseFirestore = Firebase.firestore
+    val usersCollectionRef = db.collection("users")
+    val IDDocumentRef = usersCollectionRef.document(uid!!)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Firebase.auth.currentUser ?: finish()
+        storage = Firebase.storage
 
         //툴바 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar1)
@@ -61,6 +79,33 @@ class MyPageActivity : AppCompatActivity() {
 
             }
             return super.onOptionsItemSelected(item)
+        }
+
+        showProfile()
+
+        binding.dofollowbtn.setOnClickListener {
+            //false -> true          true -> false
+        }
+
+    }
+
+    private fun showProfile() {
+        IDDocumentRef.get()
+            .addOnSuccessListener {
+                binding.name.setText(it["nickname"].toString())
+                val imageRef = storage.reference.child("profileimages/${uid!!}/${it["profile"].toString()}.png")
+                displayImageRef(imageRef, binding.myprofile)
+                binding.followerNumber.setText(it["follower"].toString())
+                binding.followerNumber.setText(it["following"].toString())
+            }.addOnFailureListener {
+                Log.d("로그","게시글 가져오기 실패")
+            }
+    }
+    private fun displayImageRef(imageRef: StorageReference?, view: ImageView) {
+        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            view.setImageBitmap(bmp)
+        }?.addOnFailureListener {
         }
     }
 }
