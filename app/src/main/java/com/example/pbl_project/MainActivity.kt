@@ -1,27 +1,69 @@
 package com.example.pbl_project
 
-
+import android.app.DownloadManager.Query
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pbl_project.databinding.ActivityMainBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.util.SimpleTimeZone
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.feed_detail.*
+import kotlinx.android.synthetic.main.feed_detail.view.*
+import model.Post
+
+
 
 class MainActivity : AppCompatActivity() {
+    //private lateinit var firestoreDb : FirebaseStorage
+    private lateinit var posts: MutableList<Post>
+    private  lateinit var adapter: FeedAdapter
+    private lateinit var binding: ActivityMainBinding
+    private val TAG = "FeedActivity"
+
+    val postID = "TPwCQ5yHxwR726VwpRjV"
+
+    val db: FirebaseFirestore = Firebase.firestore
+    val usersCollectionRef = db.collection("users")
+    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        //툴바 설정
+        val toolbar = findViewById<Toolbar>(R.id.toolbar1)
+
+        setSupportActionBar(toolbar)
+        val ac: ActionBar? = supportActionBar
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_foreground)
+
+
+        val uid = Firebase.auth.currentUser?.uid
+
         if (Firebase.auth.currentUser == null){
             val info = userInfo()
-            info.uid=Firebase.auth.currentUser?.uid
+            info.uid=uid
             FirebaseFirestore.getInstance().collection("users")?.document(Firebase.auth.uid.toString())?.set(info)
             startActivity(
                 Intent(this, LoginActivity::class.java))
@@ -31,111 +73,73 @@ class MainActivity : AppCompatActivity() {
             val info = userInfo()
             info.uid=Firebase.auth.currentUser?.uid
             FirebaseFirestore.getInstance().collection("users")?.document(Firebase.auth.uid.toString())?.set(info)
-            startActivity(
-                Intent(this, MyPageActivity::class.java))
+//            startActivity(
+//                Intent(this, MyPageActivity::class.java))
         }
 
-        binding.textUID.text = Firebase.auth.currentUser?.uid ?: "No user"
-        binding.buttonSignout.setOnClickListener {
-            Firebase.auth.signOut()
-            finish()
-        }
-        binding.postbtn.setOnClickListener {
-            startActivity(
-                Intent(this,PostingActivity::class.java))
-        }
-        binding.commentbtn.setOnClickListener {
-            startActivity(
-                Intent(this,CommentActivity::class.java))
-        }
-        binding.settingbtn.setOnClickListener {
-            startActivity(
-                Intent(this,SettingActivity::class.java))
-        }
-        binding.feedbtn.setOnClickListener {
-            startActivity(
-                Intent(this,FeedActivity::class.java))
+
+
+        posts = mutableListOf()
+        adapter = FeedAdapter(this, posts)
+        recyclerview.adapter = adapter
+        recyclerview.layoutManager = LinearLayoutManager(this)
+
+
+        //firestoreDb = FirebaseStorage.getInstance()
+        val firestore = FirebaseFirestore.getInstance()
+        val postReference = firestore
+            .collection("users").document("xeT4aAkdVoazDB8VJrK7dX5YcrZ2")
+            .collection("posts")//.document("")
+
+        postReference.addSnapshotListener { snapshot, exception ->
+            if (exception != null || snapshot == null) {
+                Log.e(TAG, "Exception when querying posts", exception)
+                return@addSnapshotListener
+            }
+            val postList = snapshot.toObjects(Post::class.java)
+            posts.clear()
+            posts.addAll(postList)
+            adapter.notifyDataSetChanged()
+            for (post in postList) {
+                Log.i(TAG, "Post ${post}")
+            }
 
         }
 
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-//            binding.textFCMToken.text = if (it.isSuccessful) it.result else "Token Error!"
-//
-//            // copy FCM token to clipboard
-//            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//            val clip = ClipData.newPlainText("FCM Token", binding.textFCMToken.text)
-//            clipboard.setPrimaryClip(clip)
-//
-//            // write to logcat
-//            Log.d(MyFirebaseMessagingService.TAG, "FCM token: ${binding.textFCMToken.text}")
-//        }
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            requestSinglePermission(Manifest.permission.POST_NOTIFICATIONS)
-//        }
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Android 8.0
-//            createNotificationChannel()
-//        }
-//    }
-//
-//    private fun requestSinglePermission(permission: String) {
-//        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
-//            return
-//
-//        val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-//            if (it == false) { // permission is not granted!
-//                AlertDialog.Builder(this).apply {
-//                    setTitle("Warning")
-//                    setMessage("notification permission required!")
-//                }.show()
-//            }
-//        }
-//
-//        if (shouldShowRequestPermissionRationale(permission)) {
-//            // you should explain the reason why this app needs the permission.
-//            AlertDialog.Builder(this).apply {
-//                setTitle("Reason")
-//                setMessage("notification permission required!")
-//                setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
-//                setNegativeButton("Deny") { _, _ -> }
-//            }.show()
-//        } else {
-//            // should be called in onCreate()
-//            requestPermLauncher.launch(permission)
-//        }
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    private fun createNotificationChannel() {
-//        val channel = NotificationChannel(
-//            "firebase-messaging", "firebase-messaging channel",
-//            NotificationManager.IMPORTANCE_DEFAULT
-//        )
-//        channel.description = "This is firebase-messaging channel."
-//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        notificationManager.createNotificationChannel(channel)
-//    }
-//
-//
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.main_menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.storage -> startActivity(
-//                Intent(this, StorageActivity::class.java))
-//            R.id.remote_config -> startActivity(
-//                Intent(this, RemoteConfigActivity::class.java))
-//            R.id.firestore -> startActivity(
-//                Intent(this, FirestoreActivity::class.java))
-//            R.id.realtime_db -> startActivity(
-//                Intent(this, RealtimeDBActivity::class.java))
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(
+            R.menu.menu_feed,
+            menu
+        )       // main_menu 메뉴를 toolbar 메뉴 버튼으로 설정
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return super.onContextItemSelected(item)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // 클릭된 메뉴 아이템의 아이디 마다 when 구절로 클릭시 동작을 설정한다.
+        when (item!!.itemId) {
+            android.R.id.home -> { // 메뉴 버튼
+                startActivity(
+                    Intent(this, MyPageActivity::class.java)
+                )
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

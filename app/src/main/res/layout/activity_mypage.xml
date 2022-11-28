@@ -88,8 +88,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/re"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="411dp"
+        android:layout_height="515dp"
         android:layout_below="@id/view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

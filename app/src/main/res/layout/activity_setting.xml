@@ -148,7 +148,8 @@
         android:background="@drawable/round_border_white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text=""
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/profileimage"
         app:layout_constraintTop_toTopOf="@+id/profileimage" />
 
@@ -170,7 +171,8 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text=""
+        android:textColor="@color/white"
         android:background="@drawable/round_border_white"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />

@@ -66,7 +66,7 @@ class SettingActivity : AppCompatActivity() {
                 }
         }
         binding.editnamebtn.setOnClickListener {
-            IDDocumentRef.update("nick", binding.editname.text.toString())
+            IDDocumentRef.update("nickname", binding.editname.text.toString())
                 .addOnSuccessListener {
                     Snackbar.make(binding.root, "닉네임 변경 완료", Snackbar.LENGTH_SHORT).show()
                 }
@@ -113,7 +113,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun uploadFile(fileName: String) {
-        val imageRef = storage.reference.child("profileimages/${uid!!}/${fileName}") // StorageReference
+        val imageRef = storage.reference.child("profileimages/${uid!!}/${fileName}.png") // StorageReference
 
         imageRef.putFile(profileURI!!).addOnCompleteListener {
             if (it.isSuccessful) {

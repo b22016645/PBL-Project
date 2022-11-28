@@ -2,6 +2,7 @@ package com.example.pbl_project
 
 import android.app.DownloadManager.Query
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Insets.add
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +10,21 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets.add
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pbl_project.databinding.ActivityCommentBinding
 import com.example.pbl_project.databinding.ActivityMypageBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_feed.*
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.feed_detail.*
 import kotlinx.android.synthetic.main.mypage_detail.*
@@ -29,16 +33,25 @@ import model.Post
 
 
 class MyPageActivity : AppCompatActivity() {
-    private lateinit var firestoreDb : FirebaseStorage
+    lateinit var storage: FirebaseStorage
+    lateinit var binding: ActivityMypageBinding
+
     private lateinit var posts: MutableList<Post>
     private  lateinit var adapter: MypageAdapter
     private val TAG = "MypageActivity"
     private val uid = Firebase.auth.currentUser?.uid
 
+    val db: FirebaseFirestore = Firebase.firestore
+    val usersCollectionRef = db.collection("users")
+    val IDDocumentRef = usersCollectionRef.document(uid!!)
+    val postReference = IDDocumentRef.collection("posts")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMypageBinding.inflate(layoutInflater)
+        binding = ActivityMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        storage = Firebase.storage
 
         //툴바 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar1)
@@ -49,12 +62,8 @@ class MyPageActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_foreground)
 
+        setprofile()
 
-
-
-        val db: FirebaseFirestore = Firebase.firestore
-        val usersCollectionRef = db.collection("users")
-        val IDDocumentRef = usersCollectionRef.document(uid!!)
         println(uid + "-----------------" + usersCollectionRef + "---------------------" + IDDocumentRef)
 
 
@@ -62,10 +71,6 @@ class MyPageActivity : AppCompatActivity() {
         adapter = MypageAdapter(this, posts)
         re.adapter = adapter
         re.layoutManager = LinearLayoutManager(this)
-
-        val firestore = FirebaseFirestore.getInstance()
-        val postReference = firestore
-            .collection("users").document(uid).collection("posts")
 
         postReference.addSnapshotListener {snapshot, exception ->
                 if (exception != null || snapshot == null) {
@@ -104,9 +109,7 @@ class MyPageActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
-                startActivity(
-                    Intent(this, FeedActivity::class.java)
-                )
+                finish()
             }
             R.id.menu_add -> {
                 startActivity(
@@ -123,6 +126,26 @@ class MyPageActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
+    private fun setprofile() {
+        IDDocumentRef.get()
+            .addOnSuccessListener {
+                binding.name.setText(it["nickname"].toString())
+                binding.statemessage.setText(it["message"].toString())
+                if (it["profile"] != null) {
+                    val imageRef = storage.reference.child("profileimages/${it.id}/${it["profile"].toString()}.png")
+                    displayImageRef(imageRef, binding.myprofile)
+                }
+            }
+            .addOnFailureListener {
 
+            }
+    }
+    private fun displayImageRef(imageRef: StorageReference?, view: ImageView) {
+        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+            val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+            view.setImageBitmap(bmp)
+        }?.addOnFailureListener {
+        }
+    }
 
 }

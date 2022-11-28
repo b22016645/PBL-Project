@@ -27,7 +27,6 @@
         <activity android:name=".ResetPwActivity"/>
         <activity android:name=".CommentActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".FeedActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -30,7 +30,7 @@ class CommentActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
     lateinit var binding: ActivityCommentBinding
     private val uid = Firebase.auth.currentUser?.uid
-    val postID = "1bjTSGaOIk3IcgNzfB9Y" //postID 넘어올때같이받기
+    val postID = "TPwCQ5yHxwR726VwpRjV" //postID 넘어올때같이받기
 
     val db: FirebaseFirestore = Firebase.firestore
     val usersCollectionRef = db.collection("users")

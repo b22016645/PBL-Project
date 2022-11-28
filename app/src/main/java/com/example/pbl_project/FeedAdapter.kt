@@ -17,8 +17,6 @@ class FeedAdapter  (val context: Context, val posts : List<Post>) :
     RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.feed_detail, parent, false)
         return ViewHolder(view)
@@ -43,7 +41,6 @@ class FeedAdapter  (val context: Context, val posts : List<Post>) :
             itemView.like_number_feed.text = post.like
 
 
-
             button.setOnClickListener {
                 Intent(context, CommentActivity::class.java).apply {
                    // putExtra("data", posts)
@@ -52,9 +49,9 @@ class FeedAdapter  (val context: Context, val posts : List<Post>) :
             }
 
             like.setOnClickListener {
-                 var likenum = post.like.toInt()
-                    likenum ++
-                    post.like = likenum.toString()
+                var likenum = post.like.toInt()
+                likenum ++
+                post.like = likenum.toString()
 
             }
 

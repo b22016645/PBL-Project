@@ -91,6 +91,7 @@ class PostingActivity : AppCompatActivity() {
             }.addOnFailureListener {
                 Log.d("로그","postingfailed")
             }
+        finish()
         //마이페이지돌아가기
     }
     private fun openGallery() {
