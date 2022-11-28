@@ -45,26 +45,9 @@ class MyPageActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_foreground)
 
-        fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            menuInflater.inflate(
-                R.menu.menu_feed,
-                menu
-            )       // main_menu 메뉴를 toolbar 메뉴 버튼으로 설정
-            return true
-        }
 
-        fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            super.onCreateContextMenu(menu, v, menuInfo)
 
-        }
 
-        fun onContextItemSelected(item: MenuItem): Boolean {
-            return super.onContextItemSelected(item)
-        }
 
 
 
@@ -93,29 +76,45 @@ class MyPageActivity : AppCompatActivity() {
 
     }
 
-//     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // 클릭된 메뉴 아이템의 아이디 마다 when 구절로 클릭시 동작을 설정한다.
-//        when (item!!.itemId) {
-//            android.R.id.home -> { // 메뉴 버튼
-//                startActivity(
-//                    Intent(this, FeedActivity::class.java)
-//                )
-//            }
-//
-//            android.R.id.add -> { // 메뉴 버튼
-//                startActivity(
-//                    Intent(this, PostingActivity::class.java)
-//                )
-//            }
-//            android.R.id.menu_setttings -> { // 메뉴 버튼
-//                startActivity(
-//                    Intent(this, SettingActivity::class.java)
-//                )
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(
+            R.menu.menu_mypage,
+            menu
+        )       // main_menu 메뉴를 toolbar 메뉴 버튼으로 설정
+        return true
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                startActivity(
+                    Intent(this, FeedActivity::class.java)
+                )
+            }
+            R.id.menu_add -> {
+                startActivity(
+                    Intent(this, PostingActivity::class.java)
+                )
+            }
+            R.id.menu_setttings -> {
+                startActivity(
+                    Intent(this, SettingActivity::class.java)
+                )
+            }
+
+        }
+        return super.onContextItemSelected(item)
+    }
 
 
 
