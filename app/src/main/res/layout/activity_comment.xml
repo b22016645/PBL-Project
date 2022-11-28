@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/commenttoolbar"
@@ -33,6 +35,7 @@
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
+        android:textSize="25dp"
         android:background="@color/white"
         android:text="게시글"
         android:textColor="@color/black"
@@ -45,6 +48,7 @@
         android:id="@+id/commentview"
         android:layout_width="300dp"
         android:layout_height="320dp"
+        android:padding="5dp"
         android:background="@drawable/view_border_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +86,7 @@
         android:background="@color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="comment"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/commentview"
         app:layout_constraintTop_toBottomOf="@+id/commentview" />

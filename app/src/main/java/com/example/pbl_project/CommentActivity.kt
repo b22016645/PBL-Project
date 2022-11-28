@@ -1,13 +1,16 @@
 package com.example.pbl_project
 
+import android.app.Activity
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -67,7 +70,7 @@ class CommentActivity : AppCompatActivity() {
         }
 
         getContent()
-        settingView()
+        initRecycler()
         refreshLike()
 
         binding.like.setOnClickListener {
@@ -93,8 +96,22 @@ class CommentActivity : AppCompatActivity() {
                         "id" to uid!!
                     )
                     addComment(commentMap)
+                    binding.comment.setText(null)
                 }
         }
+//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(v.windowToken, 0)
+
+        binding.comment.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+            }
+        }
+    }
+
+    private fun initRecycler() {
+        settingView()
     }
 
     //액션버튼 클릭 했을 때
@@ -130,7 +147,7 @@ class CommentActivity : AppCompatActivity() {
     private fun addComment(commentMap: HashMap<String,String>){
         commentCollectionRef.add(commentMap)
             .addOnSuccessListener {
-                createCommentView(it.id)
+                settingView()
             }.addOnFailureListener {
                 Snackbar.make(binding.root, "댓글 띄우기 실패", Snackbar.LENGTH_SHORT).show()
             }
@@ -143,17 +160,31 @@ class CommentActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     var commentID = document.id
-                    createCommentView(commentID)
+                    datas.apply {
+                        commentCollectionRef.document(commentID).get()
+                            .addOnSuccessListener {
+                                var content = it["comment"].toString()
+                                var id = it["id"].toString()
+                                usersCollectionRef.document(id).get()
+                                    .addOnSuccessListener {
+                                        val nick = it["nickname"].toString()
+                                        val imageRef = storage.reference.child("profileimages/${id}/${it["profile"].toString()}.png")
+                                        imageRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
+                                            var bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                                            add(CommentData(img = bmp, nick = nick, content = content ))
+                                        }
+                                    }
+                            }
+                    }
                 }
             }.addOnFailureListener {
 
             }
+        commentAdapter.datas = datas
+        commentAdapter.notifyDataSetChanged()
     }
 
     private fun createCommentView(commentID : String) {
-        commentAdapter = CommentAdapter(this)
-        commentview.adapter = commentAdapter
-
         datas.apply {
             commentCollectionRef.document(commentID).get()
                 .addOnSuccessListener {
@@ -169,9 +200,6 @@ class CommentActivity : AppCompatActivity() {
                             }
                         }
                 }
-
-            commentAdapter.datas = datas
-            commentAdapter.notifyDataSetChanged()
         }
     }
 
