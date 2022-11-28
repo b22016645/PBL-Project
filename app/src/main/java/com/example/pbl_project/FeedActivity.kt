@@ -46,8 +46,6 @@ class FeedActivity : AppCompatActivity() {
     val postsCollectionRef = IDDocumentRef.collection("posts")
     val postIDDocumentRef = postsCollectionRef.document(postID)
     val commentCollectionRef = postIDDocumentRef.collection("comments")
-
-
     
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +77,8 @@ class FeedActivity : AppCompatActivity() {
         val firestore = FirebaseFirestore.getInstance()
         val postReference = firestore
             .collection("users").document("xeT4aAkdVoazDB8VJrK7dX5YcrZ2")
-            .collection("posts")//.document("1bjTSGaOIk3IcgNzfB9Y")
-            .limit(20)
+            .collection("posts")//.document("")
+
         postReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "Exception when querying posts", exception)
