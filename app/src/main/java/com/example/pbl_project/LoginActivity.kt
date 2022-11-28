@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 if (it.isSuccessful){
                     startActivity(
-                        Intent(this, MainActivity::class.java  /* 로그인 후에 실행할 엑티비티*/))
+                        Intent(this, MyPageActivity::class.java  /* 로그인 후에 실행할 엑티비티*/))
                     finish()
                 }else{
                     Log.w("LoginActivity", "signWithEmail", it.exception)

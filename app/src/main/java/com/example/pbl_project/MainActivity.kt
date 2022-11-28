@@ -27,6 +27,13 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, LoginActivity::class.java))
             finish()
         }
+        else {
+            val info = userInfo()
+            info.uid=Firebase.auth.currentUser?.uid
+            FirebaseFirestore.getInstance().collection("users")?.document(Firebase.auth.uid.toString())?.set(info)
+            startActivity(
+                Intent(this, MyPageActivity::class.java))
+        }
 
         binding.textUID.text = Firebase.auth.currentUser?.uid ?: "No user"
         binding.buttonSignout.setOnClickListener {
