@@ -65,49 +65,7 @@ class FeedActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_foreground)
 
-        fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            menuInflater.inflate(
-                R.menu.menu_feed,
-                menu
-            )       // main_menu 메뉴를 toolbar 메뉴 버튼으로 설정
-            return super.onCreateOptionsMenu(menu)
-        }
 
-        fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            super.onCreateContextMenu(menu, v, menuInfo)
-
-        }
-
-        fun onContextItemSelected(item: MenuItem): Boolean {
-            return super.onContextItemSelected(item)
-        }
-
-        fun onOptionsItemSelected(item: MenuItem?): Boolean {
-            // 클릭된 메뉴 아이템의 아이디 마다 when 구절로 클릭시 동작을 설정한다.
-            when (item!!.itemId) {
-                android.R.id.home -> { // 메뉴 버튼
-                    startActivity(
-                        Intent(this, FeedActivity::class.java)
-                    )
-                }
-            }
-            return super.onOptionsItemSelected(item)
-        }
-//         fun onOptionsItemSelected(item: MenuItem): Boolean {
-//            when(item?.itemId){
-//                android.R.id.home -> {
-//                    //뒤로가기 버튼 눌렀을 때
-//                    Snackbar.make(binding.root, "메인페이지로 돌아가기", Snackbar.LENGTH_SHORT).show()
-//                    finish()
-//                    return super.onOptionsItemSelected(item)
-//                }
-//                else -> return super.onOptionsItemSelected(item)
-//            }
-//        }
 
 
 
@@ -115,23 +73,6 @@ class FeedActivity : AppCompatActivity() {
         adapter = FeedAdapter(this, posts)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(this)
-
-
-//        val rootRef = Firebase.storage.reference
-//
-//        val ref = rootRef.child("photoimages").child("")
-//        val postList = snapshot.toObjects(Post::class.java)
-//                    posts.clear()
-//                    posts.addAll(postList)
-//                    adapter.notifyDataSetChanged()
-//
-//        ref.getBytes(Long.MAX_VALUE).addOnCompleteListener {
-//            if (it.isSuccessful) {
-//                val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result!!.size)
-//                val imgView = findViewById<ImageView>(R.id.mypageimage)
-//                imgView.setImageBitmap(bmp)
-//            }
-//        }
 
 
         //firestoreDb = FirebaseStorage.getInstance()
@@ -156,30 +97,42 @@ class FeedActivity : AppCompatActivity() {
         }
 
 
-//
-//
-//        binding.recyclerview.like_feed.setOnClickListener {
-//            postIDDocumentRef.get()
-//                .addOnSuccessListener {
-//                    var like = it["like"].toString()
-//                    var likenum = like.toInt()
-//                    likenum ++
-//                    like = likenum.toString()
-//
-//                    postIDDocumentRef.update("like", like)
-//                        .addOnSuccessListener { refreshLike() }
-//                }
-//            }
 
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(
+            R.menu.menu_feed,
+            menu
+        )       // main_menu 메뉴를 toolbar 메뉴 버튼으로 설정
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return super.onContextItemSelected(item)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // 클릭된 메뉴 아이템의 아이디 마다 when 구절로 클릭시 동작을 설정한다.
+        when (item!!.itemId) {
+            android.R.id.home -> { // 메뉴 버튼
+                startActivity(
+                    Intent(this, MyPageActivity::class.java)
+                )
+            }
         }
-//
-//        fun refreshLike() {
-//            postIDDocumentRef.get()
-//                .addOnSuccessListener {
-//                    binding.recyclerview.like_number_feed.setText(it["like"].toString())
-//                }
-//        }
-
+        return super.onOptionsItemSelected(item)
+    }
 
 }
