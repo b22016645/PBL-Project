@@ -15,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets.add
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pbl_project.databinding.ActivityMypageBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.activity_mypage.*
@@ -30,6 +33,7 @@ class MyPageActivity : AppCompatActivity() {
     private lateinit var posts: MutableList<Post>
     private  lateinit var adapter: MypageAdapter
     private val TAG = "MypageActivity"
+    private val uid = Firebase.auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,10 @@ class MyPageActivity : AppCompatActivity() {
 
 
 
-
+        val db: FirebaseFirestore = Firebase.firestore
+        val usersCollectionRef = db.collection("users")
+        val IDDocumentRef = usersCollectionRef.document(uid!!)
+        println(uid + "-----------------" + usersCollectionRef + "---------------------" + IDDocumentRef)
 
 
         posts = mutableListOf()
@@ -58,8 +65,8 @@ class MyPageActivity : AppCompatActivity() {
 
         val firestore = FirebaseFirestore.getInstance()
         val postReference = firestore
-            .collection("users").document("IapvxRJRHvdyqPZujkFARxfsDYI3").collection("posts")
-            .limit(20)
+            .collection("users").document(uid).collection("posts")
+
         postReference.addSnapshotListener {snapshot, exception ->
                 if (exception != null || snapshot == null) {
                     Log.e(TAG, "Exception when querying posts", exception)
